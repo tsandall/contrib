@@ -1,0 +1,20 @@
+version: "3"
+services:
+  opa:
+    image: openpolicyagent/opa:0.4.10
+    command:
+      - run
+      - --server
+    ports:
+      - 8181:8181
+  distrib_s3:
+    image: openpolicyagent/distrib_s3:0.1
+    command:
+      - python
+      - /distrib_s3.py
+      - --opa-url=http://opa:8181/v1
+      - BUCKET_NAME
+      - POLICY_FILE
+    environment:
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_ACCESS_KEY_ID
